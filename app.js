@@ -35,9 +35,9 @@ const sessionOptions = {
         maxAge:1000 * 60 * 60 * 24 * 7
     },
 };
+
 app.use(session(sessionOptions));
 app.use(flash());
-
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -53,9 +53,9 @@ main().then(()=>{
     async function main(){
       await mongoose.connect(MONGO_URL);
     }
-    app.get('/',(req,res) => {
-      res.send("app is work")
-  })
+  //   app.get('/',(req,res) => {
+  //     res.send("app is work")
+  // })
 app.use((req,res,next) =>{  
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");

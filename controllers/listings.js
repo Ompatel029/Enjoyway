@@ -90,3 +90,22 @@ module.exports.deleteListing = (async (req, res) => {
     req.flash("success", "Listing Deleted!");
     res.redirect("/listings");
 });
+
+module.exports.filterListings = async (req, res) => {
+    const { category } = req.params;
+    try {
+      let filteredListings;
+      if (category === "trending") {
+        // For trending, show listings with highest ratings/reviews
+        filteredListings = await Listing.find({})
+          .sort({ reviews: -1 })
+          .limit(10);
+      } else {
+        filteredListings = await Listing.find({ category });
+      }
+      res.render("listings/index", { allListing: filteredListings });
+    } catch (error) {
+      req.flash("error", "Error filtering listings");
+      res.redirect("/listings");
+    }
+  };
