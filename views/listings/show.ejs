@@ -12,6 +12,7 @@
     <div class="card col-6 offset-2 show-card">
       <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_img">
       <div class="card-body">
+         <p><strong>Category:</strong> <%= listing.category.replace('-', ' ') %></p>
          <p class="card-text"> Own by
             <i><%= listing.owner.username %></i>
          </p>

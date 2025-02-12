@@ -16,7 +16,6 @@
         margin-right: 1rem;
         margin-top: 2rem;
         opacity: 0.7;
-        
       }
       .filter:hover{
         opacity: 1.2;
@@ -24,6 +23,18 @@
       }
       .filter p{
         font-size: 0.8rem;
+      }
+      .tax-info {
+         display: none;
+      }
+      .tax-toggle{
+        border: 1px solid black;
+        border-radius: 12px;
+        height: 3.5rem;
+        padding: 1rem;
+        margin-left: 4rem;
+        display: flex;
+        align-items: center;
       }
     </style>
 <div id="filters">
@@ -63,7 +74,14 @@
     <div><i class="fa-solid fa-snowflake"></i></div> 
     <p>Arctic</p>
   </a>
+  <div class="tax-toggle">
+  <div class="form-check-reverse form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+    <label class="form-check-label" for="flexSwitchCheckDefault">Display taxes</label>
+  </div>
+ </div>
 </div>
+
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
   <% for(let listing of allListing){ %>
     <a href="/listings/<%= listing._id %>" class="listing-link">
@@ -78,6 +96,7 @@
          <b><%= listing.title %></b><br>
           ₹ <% if (listing.price !== undefined && listing.price !== null) { %>
             <%= listing.price.toLocaleString("en-IN") %> /night
+            <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
         <% } else { %>
             Price not available
         <% } %>         
@@ -87,4 +106,18 @@
   </a>
     <% } %>
 </div>
+<script>
+  let taxswitch = document.getElementById("flexSwitchCheckDefault");
+  taxswitch.addEventListener("click",() =>{
+  let taxinfo = document.getElementsByClassName("tax-info")
 
+  for (info of taxinfo) {
+    if(info.style.display != "inline"){
+      info.style.display = "inline";
+    }
+    else{
+      info.style.display = "none";
+    }
+  }
+})
+</script>
