@@ -3,10 +3,10 @@ const review = require("./review.js");
 const Schema = mongoose.Schema;
 
 const listingSchema = new Schema({
-     title:{
-         type: String,
-         require: true
-     },
+   title:{
+      type: String,
+      required: true 
+  },
      description:{ 
         type: String,
      },
@@ -34,16 +34,17 @@ const listingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
      },
-     geometry:{
-         type: {
-          type: String, 
-          enum: ['Point'], 
-          required: true
-     },
-     coordinates: {
-       type: [Number],
-       required: true
-    }
+     geometry: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        default: 'Point' // Default value
+      },
+      coordinates: {
+        type: [Number],
+        default: [0, 0] // Default coordinates
+      }
+    
    },
    category:{
       type: String,
