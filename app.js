@@ -1,5 +1,7 @@
 
 require('dotenv').config();
+const dbUrl = process.env.ATLASDB_URL;
+
 
 const express = require("express")
 const app = express()
@@ -14,7 +16,6 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-const dbUrl = process.env.ATLASDB_URL;
 
 const Review = require('./models/review.js')
 const listingRouter = require("./routes/listing");
@@ -36,7 +37,7 @@ const Store =MongoStore.create({
   touchAfter: 24 * 3600,
 })
 
-Store.on("error",() => {
+Store.on("error",(err) => {
   console.log("Error in MONGO SESSION STORE",err)
 })
 const sessionOptions = {
