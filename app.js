@@ -73,8 +73,9 @@ main().then(()=>{
   // })
  
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("listings/index");  // Correct path inside "views/listings/"
 });
+
 
 app.use((req,res,next) =>{  
     res.locals.success = req.flash("success");
