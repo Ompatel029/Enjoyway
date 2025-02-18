@@ -71,6 +71,11 @@ main().then(()=>{
   //   app.get('/',(req,res) => {
   //     res.send("app is work")
   // })
+ 
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
 app.use((req,res,next) =>{  
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
