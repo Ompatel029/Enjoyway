@@ -1,7 +1,5 @@
 
 require('dotenv').config();
-const dbUrl = process.env.ATLASDB_URL;
-
 
 const express = require("express")
 const app = express()
@@ -16,6 +14,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
+const dbUrl = process.env.ATLASDB_URL;
 
 const Review = require('./models/review.js')
 const listingRouter = require("./routes/listing");
@@ -32,7 +31,7 @@ app.engine("ejs", ejsMate);
 const Store =MongoStore.create({
   mongoUrl: dbUrl,
   crypto: {
-    secret:"mysecret"
+    secret:"process.env.SECRET"
   },
   touchAfter: 24 * 3600,
 })
@@ -42,7 +41,7 @@ Store.on("error",(err) => {
 })
 const sessionOptions = {
    Store,
-    secret:"mysecret",
+    secret:"process.env.SECRET",
     resave:false,
     saveUninitialized:true,
     cookie:{
