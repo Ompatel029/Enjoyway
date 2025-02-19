@@ -1,41 +1,90 @@
-<% layout("/layouts/boilerplate")%>
-    <!-- <h1>All Listings</h1> -->
-   <!--<form method="GET" action="/listings/new">
-        <button>Create New</button>
-    </form>--> 
-    <style>
-      #filters{
-       display: flex;
-       flex-wrap: wrap;
-       justify-content: center;
-        align-items: center;
-      }
-      .filter{
-        text-align: center;
-        margin-right: 1rem;
-        margin-top: 2rem;
-        opacity: 0.7;
-      }
-      .filter:hover{
-        opacity: 1.2;
-        cursor: pointer;
-      }
-      .filter p{
-        font-size: 0.8rem;
-      }
-      .tax-info {
-         display: none;
-      }
-      .tax-toggle{
-        border: 1px solid black;
-        border-radius: 12px;
-        height: 3.5rem;
-        padding: 1rem;
-        margin-left: 4rem;
-        display: flex;
-        align-items: center;
-      }
-    </style>
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  /* Filter Section */
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .filter {
+    text-align: center;
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out;
+  }
+  .filter:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  .filter p {
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+
+  /* Tax Toggle */
+  .tax-toggle {
+    border: 1px solid black;
+    border-radius: 12px;
+    height: 3rem;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Listings Grid */
+  .listing-link {
+    text-decoration: none;
+    color: black;
+  }
+
+  .card {
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card img {
+    height: 16rem;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+
+  /* Responsive Grid */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .col-md-6 {
+      flex: 0 0 48%;
+      max-width: 48%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .col-md-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+    .tax-toggle {
+      margin-left: 0;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
 <div id="filters">
   <a href="/listings/filter/trending" class="filter">
     <div><i class="fa-solid fa-fire"></i></div> 
@@ -74,50 +123,40 @@
     <p>Arctic</p>
   </a>
   <div class="tax-toggle">
-  <div class="form-check-reverse form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-    <label class="form-check-label" for="flexSwitchCheckDefault">Display taxes</label>
+    <div class="form-check-reverse form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Display taxes</label>
+    </div>
   </div>
- </div>
 </div>
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-  
+<div class="row">
   <% for(let listing of allListing){ %>
-    <a href="/listings/<%= listing._id %>" class="listing-link">
-    <div class="card " style="width: 20rem;">
-      <img src="<%= listing.image.url %>" 
-      class="card-img-top" 
-      alt="listing_img" 
-      style="height: 20rem;">
-      <div class="card-img-overlay"></div>
-      <div class="card-body">
-        <p class="card-text">
-         <b><%= listing.title %></b><br>
-          ₹ <% if (listing.price !== undefined && listing.price !== null) { %>
-            <%= listing.price.toLocaleString("en-IN") %> /night
-            <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
-        <% } else { %>
-            Price not available
-        <% } %>         
-       </p>
+    <a href="/listings/<%= listing._id %>" class="col-md-6 col-lg-4 listing-link">
+      <div class="card">
+        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_img">
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.title %></b><br>
+            ₹ <% if (listing.price !== undefined && listing.price !== null) { %>
+              <%= listing.price.toLocaleString("en-IN") %> /night
+              <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
+            <% } else { %>
+              Price not available
+            <% } %>         
+          </p>
+        </div>
       </div>
-    </div>
-  </a>
-    <% } %>
+    </a>
+  <% } %>
 </div>
+
 <script>
   let taxswitch = document.getElementById("flexSwitchCheckDefault");
-  taxswitch.addEventListener("click",() =>{
-  let taxinfo = document.getElementsByClassName("tax-info")
-
-  for (info of taxinfo) {
-    if(info.style.display != "inline"){
-      info.style.display = "inline";
+  taxswitch.addEventListener("click", () => {
+    let taxinfo = document.getElementsByClassName("tax-info");
+    for (let info of taxinfo) {
+      info.style.display = (info.style.display !== "inline") ? "inline" : "none";
     }
-    else{
-      info.style.display = "none";
-    }
-  }
-})
+  });
 </script>
