@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Add your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Book <%= listing.title %></h1>
+        <p>Location: <%= listing.location %></p>
+        <p>Price per night: $<%= listing.price %></p>
+        
+        <form action="/listings/<%= listing._id %>/book" method="POST">
+            <label for="checkIn">Check-in Date:</label>
+            <input type="date" id="checkIn" name="checkIn" required>
+
+            <label for="checkOut">Check-out Date:</label>
+            <input type="date" id="checkOut" name="checkOut" required>
+            
+            <button type="submit" class="btn btn-success">Confirm Booking</button>
+        </form>
+    </div>
+</body>
+</html>

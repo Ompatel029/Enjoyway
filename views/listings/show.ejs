@@ -65,6 +65,13 @@
       </form>
     </div>
    <% } %>
+
+   <% if (currentUser && !currentUser._id.equals(listing.owner._id)) { %>
+    <div class="btns">
+      <a href="/listings/<%= listing._id %>/book" class="btn btn-dark">Book Now</a>
+      
+    </div>
+   <% } %>
     
    <div class="col-12 reviews"> 
       <% if(currentUser) { %>

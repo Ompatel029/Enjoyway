@@ -26,6 +26,10 @@ router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(listings.renderEditForm))
 
 router.get("/filter/:category", wrapAsync(listingController.filterListings));
 
+// Booking Routes
+router.get("/:id/book", isLoggedIn, wrapAsync(listingController.renderBookingForm));
+router.post("/:id/book", isLoggedIn, wrapAsync(listingController.bookListing));
+
 module.exports = router;
 module.exports.index = async (req, res) => {
     try {
